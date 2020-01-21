@@ -11,7 +11,7 @@ client.commands = new Discord.Collection();
 const discord_token = process.env.DISCORD_ACCESS;
 
 //read command files into a collection
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -37,9 +37,12 @@ client.on('message', message => {
     const command = client.commands.get(commandName);
 
     //execute command
-	try {
-		client.commands.get(command).execute(message, args);
-	} catch (error) {
+	try 
+	{
+		command.execute(message, args);
+	} 
+	catch (error) 
+	{
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
